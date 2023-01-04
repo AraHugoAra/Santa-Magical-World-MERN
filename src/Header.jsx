@@ -3,17 +3,20 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+//Router
+import { Link } from "react-router-dom";
 
 export default function Header() {
     
     return(
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" color="transparent">
+            <AppBar position="static" color="transparent" varient="dense">
                 <Toolbar>
                     <IconButton
+                    disabled
                     size="large"
                     edge="start"
                     color="inherit"
@@ -22,13 +25,13 @@ export default function Header() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 4}}>
-                    Home
+                    <Typography variant="h6" component="div" sx={{ mx: 2 }}>
+                        <Link to="/">Home</Link>
                     </Typography>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 4}}>
-                    Add a new toy
+                    <Typography variant="h6" component="div" sx={{ mx: 2 }}>
+                        <Link to="/toys/new">Add a New Toy</Link>
                     </Typography>
-                    <Button color="inherit" sx={{ flexGrow: 2}}>Login</Button>
+                    {/* <Button color="inherit">Login</Button> */}
                 </Toolbar>
             </AppBar>
         </Box>

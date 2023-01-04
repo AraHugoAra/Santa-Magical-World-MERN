@@ -8,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -34,8 +35,8 @@ export default function Home() {
 
     return(
         <>
-            <h1>Santa's Magical World</h1>
-            <h2>Toys categories</h2>
+            <Typography variant="h1" align="center" sx={{ my: 5 }}>Santa's Magical World</Typography>
+            <Typography variant="h2" align="center" sx={{ my: 5 }}>Toys List</Typography>
             {loading || error
                 ? (
                     <p>Loading...</p>
