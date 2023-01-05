@@ -1,4 +1,3 @@
-import useFetch from "./hooks/useFetch"
 //MUI
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -9,8 +8,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { useParams } from 'react-router-dom'
 
-import { Link } from "react-router-dom";
+import useFetch from './hooks/useFetch'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -32,22 +32,24 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 
-export default function Home() {
-    const { loading, error, data } = useFetch('http://localhost:3001/toys/')
+export default function Toy() {
+    let { toyId } = useParams()
+    const { data, error, loading } = useFetch(`http://localhost:3001/toys/${toyId}`)
 
     return(
         <>
-            <Typography variant="h1" align="center" sx={{ my: 5 }}>Santa's Magical World</Typography>
-            <Typography variant="h2" align="center" sx={{ my: 5 }}>Toys List</Typography>
-            {loading || error
-                ? (
-                    <p>Loading...</p>
-                ) : (
+            <Typography align="center" variant="h1">Santa's Magical World</Typography>
+            {loading || error ? (
+                <p>Loading</p>
+            ) : (
+                <>
+                    <Typography align="center" variant="h2">
+                        {data.respDB[0].name}'s details
+                    </Typography>
                     <TableContainer component={Paper}>
                         <Table align="center" sx={{ minWidth: 650, maxWidth: 1250 }} aria-label="toys table">
                             <TableHead>
                                 <TableRow>
-                                        <StyledTableCell >Toy</StyledTableCell>
                                         <StyledTableCell>Description</StyledTableCell>
                                         <StyledTableCell>Price</StyledTableCell>
                                         <StyledTableCell>Category</StyledTableCell>
@@ -56,18 +58,17 @@ export default function Home() {
                             <TableBody>
                                 {data.respDB.map(toy => (
                                     <StyledTableRow key={toy.id}>
-                                        <StyledTableCell component="th" scope="row">
-                                            <Link to={`/toys/${toy.id}`}>{toy.name}</Link>
-                                        </StyledTableCell>
                                         <StyledTableCell>{toy.description}</StyledTableCell>
                                         <StyledTableCell>{toy.price}</StyledTableCell>
-                                        <StyledTableCell>{toy.category}</StyledTableCell>
+                                        <StyledTableCell>{!toy.category ? "n/a" : toy.category}</StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
-                )}
+                </>
+            )
+            }
         </>
     )
 }
