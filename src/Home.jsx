@@ -14,6 +14,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Link } from "react-router-dom";
 
 import { useEffect, useState } from "react";
+import useFetch from './hooks/useFetch';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -36,26 +37,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }));
 
 export default function Home() {
-    const [data, setData] = useState(null)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
     const [deleting, setDeleting] = useState(false)
-
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true)
-            try {
-                const response = await fetch('http://localhost:3001/toys/')
-                const json = await response.json()
-                setData(json)
-                setLoading(false)
-            } catch (error) {
-                setError(error)
-                setLoading(false)
-            }
-        }
-    fetchData()
-    }, [deleting])
+    const { data, loading, error } = useFetch('http://localhost:3001/toys/', deleting)
 
     async function handleDelete(e, toyId) {
         e.preventDefault()
