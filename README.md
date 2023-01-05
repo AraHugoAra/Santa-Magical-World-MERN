@@ -1,3 +1,11 @@
+Full stack MERN app done as a project for Matrice.io RNCP6 tuition.
+
+PS: it's not really MERN as M stands for MySQL here
+
+
+------------------------------------------------------------------
+
+
 🪞 Santa-Magical-World MERN 
 
 Vous allez ajouter une partie Client en ReactJS à votre serveur (projet Santa Magical World avec MongoDB)
