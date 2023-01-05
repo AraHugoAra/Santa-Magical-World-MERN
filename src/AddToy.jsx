@@ -43,6 +43,7 @@ export default function AddToy() {
             const response = await fetch('http://localhost:3001/toys/', requestOptions)
             const data = await response.json()
             console.log('Success ', data)
+            window.location = "/"
         } catch(error) {
             console.log('Error ', error)
         }
@@ -65,9 +66,9 @@ export default function AddToy() {
     }
 
     return(
-        <form onSubmit={(e) => handleSubmit(e)}>
-            <Typography variant="h1" align="center" sx={{ my: 5 }}>Santa's Magical World</Typography>
-            <Typography variant="h2" align="center" sx={{ my: 5 }}>Add a New Toy</Typography>
+        <form action="/" onSubmit={(e) => handleSubmit(e)}>
+            <Typography variant="h2" align="center" sx={{ my: 5 }}>Santa's Magical World</Typography>
+            <Typography variant="h3" align="center" sx={{ my: 5 }}>Add a New Toy</Typography>
             {loading || error ? (
                 <p>Loading...</p>
             ) : (

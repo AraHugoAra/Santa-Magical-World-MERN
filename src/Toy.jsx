@@ -38,12 +38,12 @@ export default function Toy() {
 
     return(
         <>
-            <Typography align="center" variant="h1">Santa's Magical World</Typography>
+            <Typography sx={{ my: 4 }} align="center" variant="h2">Santa's Magical World</Typography>
             {loading || error ? (
                 <p>Loading</p>
             ) : (
                 <>
-                    <Typography align="center" variant="h2">
+                    <Typography sx={{ my: 4 }} align="center" variant="h3">
                         {data.respDB[0].name}'s details
                     </Typography>
                     <TableContainer component={Paper}>

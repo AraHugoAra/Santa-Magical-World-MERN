@@ -37,8 +37,8 @@ export default function Home() {
 
     return(
         <>
-            <Typography variant="h1" align="center" sx={{ my: 5 }}>Santa's Magical World</Typography>
-            <Typography variant="h2" align="center" sx={{ my: 5 }}>Toys List</Typography>
+            <Typography variant="h2" align="center" sx={{ my: 5 }}>Santa's Magical World</Typography>
+            <Typography variant="h3" align="center" sx={{ my: 5 }}>Toys List</Typography>
             {loading || error
                 ? (
                     <p>Loading...</p>
