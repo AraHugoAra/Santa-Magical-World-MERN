@@ -1,4 +1,3 @@
-import useFetch from "./hooks/useFetch"
 //MUI
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -9,8 +8,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import { Link } from "react-router-dom";
+
+import { useEffect, useState } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -33,7 +36,37 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }));
 
 export default function Home() {
-    const { loading, error, data } = useFetch('http://localhost:3001/toys/')
+    const [data, setData] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+    const [deleting, setDeleting] = useState(false)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true)
+            try {
+                const response = await fetch('http://localhost:3001/toys/')
+                const json = await response.json()
+                setData(json)
+                setLoading(false)
+            } catch (error) {
+                setError(error)
+                setLoading(false)
+            }
+        }
+    fetchData()
+    }, [deleting])
+
+    async function handleDelete(e, toyId) {
+        e.preventDefault()
+        try {
+            await fetch(`http://localhost:3001/toys/${toyId}`, {method: 'DELETE'})
+            setDeleting(d => !d)
+        } catch(error) {
+            console.log('Deletion error: ', error)
+            setDeleting(d => !d)
+        }
+    }
 
     return(
         <>
@@ -51,6 +84,7 @@ export default function Home() {
                                         <StyledTableCell>Description</StyledTableCell>
                                         <StyledTableCell>Price</StyledTableCell>
                                         <StyledTableCell>Category</StyledTableCell>
+                                        <StyledTableCell>Delete</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -62,6 +96,11 @@ export default function Home() {
                                         <StyledTableCell>{toy.description}</StyledTableCell>
                                         <StyledTableCell>{toy.price}</StyledTableCell>
                                         <StyledTableCell>{toy.category}</StyledTableCell>
+                                        <StyledTableCell>
+                                            <Button onClick={(e) => handleDelete(e, toy.id)}>
+                                                <DeleteOutlineIcon color="inherit" />
+                                            </Button>
+                                        </StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
